@@ -1,4 +1,4 @@
-baseurl                 = "https://zaoldyeck.github.io/"
+# baseurl                 = "https://zaoldyeck.github.io/"
 DefaultContentLanguage  = "en"
 title                   = "Hugo Future Imperfect Slim"
 theme                   = "hugo-future-imperfect-slim"
