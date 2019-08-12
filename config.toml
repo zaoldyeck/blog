@@ -1,9 +1,9 @@
 # baseurl                 = "https://zaoldyeck.github.io/"
-DefaultContentLanguage  = "en"
-title                   = "Hugo Future Imperfect Slim"
+DefaultContentLanguage  = "zh"
+title                   = "靈性思維"
 theme                   = "hugo-future-imperfect-slim"
 preserveTaxonomyNames   = true
-paginate                = 3
+paginate                = 5
 disqusShortname         = ""
 googleAnalytics         = ""
 pluralizeListTitles     = false
@@ -51,7 +51,7 @@ canonifyURLs = true
 
   [params.header]
     # Sets the navbarTitle that appears in the top left of the navigation bar
-    navbarTitle         = "Future Imperfect"
+    navbarTitle         = "靈性思維"
     # Sets navbarTitle to match the section of the website
     dynamicTitles       = true
     searchMenu          = true
@@ -61,7 +61,7 @@ canonifyURLs = true
   # These are optional params related to the sidebar. They are recommended, but not
   # required for proper functionality. HTML is supported within the params.
   [params.intro]
-    header                = "Hugo Future Imperfect Slim"
+    header                = "靈性思維"
     paragraph             = "Another fine, responsive site template by <a href='http://html5up.net'>HTML5 UP</a>."
     rssIntro              = true
     socialIntro           = true
@@ -145,6 +145,11 @@ canonifyURLs = true
 
 [Languages]
   # Each language has its own menu.
+  [Languages.zh]
+    languageCode        = "zh"
+    LanguageName        = "正體中文"
+    weight              = 0
+
   [Languages.en]
     languageCode        = "en"
     LanguageName        = "English"
