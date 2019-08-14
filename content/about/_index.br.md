@@ -1,6 +1,7 @@
 +++
 title = "Sobre Hugo"
 date = "2014-04-09"
+draft = true
 +++
 
 Hugo é um gerador de site escrito em Go.

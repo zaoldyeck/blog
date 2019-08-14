@@ -9,6 +9,7 @@ featuredpath = "date"
 linktitle = ""
 title = "Tworzenie nowego motywu"
 type = "post"
+draft = true
 
 +++
 

@@ -3,27 +3,17 @@ title = "About 靈性思維"
 date = "2019-08-08"
 +++
 
-Hugo is a static site engine written in Go.
+從小我就會不斷的問：「我是誰？」「為什麼我在這裡？」「活著的意義是什麼？」
 
+對生命充滿無限的好奇心，不停地追求答案，在這個旅途中，接觸過佛教、基督教、一貫道、禪修、新時代，最後是《[奇蹟課程](https://www.acimtaiwan.info/)》，終於在奇蹟課程中找到答案。
 
-It makes use of a variety of open source projects including:
+這個網站紀錄了我解開生命中的哪些謎底，以及平常的體悟和觀察。
 
-* [Cobra](https://github.com/spf13/cobra)
-* [Viper](https://github.com/spf13/viper)
-* [J Walter Weatherman](https://github.com/spf13/jWalterWeatherman)
-* [Cast](https://github.com/spf13/cast)
+靈性並不是那麼遙不可及，也不是蠱惑人心、會控制他人思想的東西。
 
-Learn more and contribute on [GitHub](https://github.com/spf13).
+它可以實際的應用在生活之中，我透過靈性思維，改善了與父母、親人、伴侶、朋友甚至陌生人的關係。工作上易領悟做事的方法。靈性思維也使我更富裕，成為一位平安、不情緒化、不再因為外在變動而有所動搖的人。最重要的是，它讓我學會了**做自己**。
 
-## Setup
+現在，我會分享這一切，一起加入靈性的旅途吧~
 
-Some fun facts about [Hugo](http://gohugo.io/):
-
-* Built in [Go](http://golang.org/)
-* Loosely inspired by [Jekyll](http://jekyllrb.com/)
-* Primarily developed by [spf13](http://spf13.com/) on the train while commuting to and from Manhattan.
-* Coded in [Vim](http://vim.org) using [spf13-vim](http://vim.spf13.com/)
-
-Have questions or suggestions? Feel free to [open an issue on GitHub](https://github.com/spf13/hugo/issues/new) or [ask me on Twitter](https://twitter.com/spf13).
-
-Thanks for reading!
+</br>
+*如不想錯過最新文章，可追蹤[粉絲專頁](https://www.facebook.com/靈性思維-111592156852356/)。

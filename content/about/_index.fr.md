@@ -1,6 +1,7 @@
 +++
 title = "À propos de Hugo"
 date = "2014-04-09"
+draft = true
 +++
 
 Hugo est un moteur de site statique écrit en Go.

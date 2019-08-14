@@ -9,4 +9,5 @@ contactsubject = "Subject"
 contactmessage = "Your Message"
 contactlang = "pl"
 contactanswertime = 24
+draft = true
 +++
