@@ -1,6 +1,6 @@
 # baseurl                 = "https://zaoldyeck.github.io/"
-DefaultContentLanguage  = "zh"
-title                   = "靈性思維"
+DefaultContentLanguage  = "zh-tw"
+title                   = "靈性思維 在生活中實踐"
 theme                   = "hugo-future-imperfect-slim"
 preserveTaxonomyNames   = true
 paginate                = 5
@@ -51,12 +51,12 @@ canonifyURLs = true
 
   [params.header]
     # Sets the navbarTitle that appears in the top left of the navigation bar
-    navbarTitle         = "靈性思維"
+    navbarTitle         = "靈性思維 在生活中實踐"
     # Sets navbarTitle to match the section of the website
-    dynamicTitles       = true
+    dynamicTitles       = false
     searchMenu          = true
     shareMenu           = true
-    languageMenu        = true
+    languageMenu        = false
 
   # These are optional params related to the sidebar. They are recommended, but not
   # required for proper functionality. HTML is supported within the params.
@@ -69,14 +69,14 @@ canonifyURLs = true
     # This appears at the top of the sidebar above params.intro.header.
     # A width of less than 100px is recommended from a design perspective.
     [params.intro.pic]
-      src                 = "/img/main/logo.jpg"
+      src                 = "/img/main/me.JPG"
       # Masks image in a certain shape. Supported are circle, triangle, diamond, and hexagon.
       shape               = "circle"
       width               = ""
       alt                 = "Hugo Future Imperfect Slim"
 
   [params.sidebar]
-    about               = "test"
+    about               = "靈性思維"
     # Sets the number of recent posts to show in the sidebar. The default value is 5.
     postAmount          = 5
     # set to show or to hide categories in the sidebar
@@ -145,10 +145,34 @@ canonifyURLs = true
 
 [Languages]
   # Each language has its own menu.
-  [Languages.zh]
-    languageCode        = "zh"
-    LanguageName        = "正體中文"
-    weight              = 0
+  [Languages.zh-tw]
+      languageCode        = "zh-TW"
+      LanguageName        = "正體中文"
+      weight              = 0
+
+      [[Languages.zh-tw.menu.main]]
+        name              = "About"
+        url               = "/about/"
+        identifier        = "far fa-id-card"
+        weight            = 1
+
+      [[Languages.zh-tw.menu.main]]
+        name              = "Blog"
+        url               = "/blog/"
+        identifier        = "far fa-newspaper"
+        weight            = 2
+
+      [[Languages.zh-tw.menu.main]]
+        name              = "Categories"
+        url               = "/categories/"
+        identifier        = "fas fa-sitemap"
+        weight            = 3
+
+      [[Languages.zh-tw.menu.main]]
+        name              = "Contact"
+        url               = "/contact/"
+        identifier        = "far fa-envelope"
+        weight            = 4
 
   [Languages.en]
     languageCode        = "en"
@@ -271,49 +295,49 @@ canonifyURLs = true
 # and socialAppearAtBottom.
 [social]
   # Coding Communities
-  github                = "pacollins/hugo-future-imperfect-slim"
-  gitlab                = ""
-  stackoverflow         = "" # User Number
-  bitbucket             = ""
-  jsfiddle              = ""
-  codepen               = ""
+  github                = "zaoldyeck"
+#  gitlab                = ""
+#  stackoverflow         = "" # User Number
+#  bitbucket             = ""
+#  jsfiddle              = ""
+#  codepen               = ""
   # Visual Art Communities
-  deviantart            = ""
-  flickr                = "example"
-  behance               = ""
-  dribbble              = ""
+#  deviantart            = ""
+#  flickr                = "example"
+#  behance               = ""
+#  dribbble              = ""
   # Publishing Communities
-  wordpress             = ""
-  medium                = ""
+#  wordpress             = ""
+#  medium                = ""
   # Professional/Business Oriented Communities
-  linkedin              = "example"
-  linkedin_company      = "examplebusiness"
-  foursquare            = ""
-  xing                  = ""
-  slideshare            = ""
+  linkedin              = "zaoldyeck"
+#  linkedin_company      = "examplebusiness"
+#  foursquare            = ""
+#  xing                  = ""
+#  slideshare            = ""
   # Social Networks
-  facebook              = "example"
-  googleplus            = ""
-  reddit                = "example"
-  quora                 = ""
-  youtube               = ""
-  vimeo                 = ""
-  whatsapp              = "" # WhatsApp Number
+  facebook              = "靈性思維-111592156852356"
+#  googleplus            = ""
+#  reddit                = "example"
+#  quora                 = ""
+#  youtube               = ""
+#  vimeo                 = ""
+#  whatsapp              = "" # WhatsApp Number
     # WeChat and QQ need testing.
-    wechat              = ""
-    qq                  = "" # User ID Number
-  instagram             = "example"
-  tumblr                = ""
-  twitter               = "example"
-  skype                 = ""
-  snapchat              = ""
-  pinterest             = "example"
-  telegram              = "example"
-  vine                  = ""
-  googlescholar         = ""
-  orcid                 = ""
-  researchgate          = "example"
-  keybase               = "example"
-  mastodon              = "example.com/@example"
+#    wechat              = ""
+#    qq                  = "" # User ID Number
+#  instagram             = "example"
+#  tumblr                = ""
+#  twitter               = "example"
+#  skype                 = ""
+#  snapchat              = ""
+#  pinterest             = "example"
+#  telegram              = "example"
+#  vine                  = ""
+#  googlescholar         = ""
+#  orcid                 = ""
+#  researchgate          = "example"
+#  keybase               = "example"
+#  mastodon              = "example.com/@example"
   # Email
-  email                 = "example"
+  email                 = "zaoldyeck9970@gmail.com"

@@ -1,6 +1,6 @@
 +++
-title = "About Hugo"
-date = "2014-04-09"
+title = "About 靈性思維"
+date = "2019-08-08"
 +++
 
 Hugo is a static site engine written in Go.
