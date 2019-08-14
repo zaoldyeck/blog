@@ -1,4 +1,4 @@
-# baseurl                 = "https://zaoldyeck.github.io/"
+baseurl                 = "https://spirit-mind.netlify.com/"
 DefaultContentLanguage  = "zh-tw"
 title                   = "靈性思維 在生活中實踐"
 theme                   = "hugo-future-imperfect-slim"
