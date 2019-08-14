@@ -1,6 +1,6 @@
 baseurl                 = "https://spirit-mind.netlify.com/"
 DefaultContentLanguage  = "zh-tw"
-title                   = "靈性思維 在生活中實踐"
+title                   = "靈性思維 在生活裡實踐"
 theme                   = "hugo-future-imperfect-slim"
 preserveTaxonomyNames   = true
 paginate                = 5
@@ -51,7 +51,7 @@ canonifyURLs = true
 
   [params.header]
     # Sets the navbarTitle that appears in the top left of the navigation bar
-    navbarTitle         = "靈性思維 在生活中實踐"
+    navbarTitle         = "靈性思維 在生活裡實踐"
     # Sets navbarTitle to match the section of the website
     dynamicTitles       = false
     searchMenu          = true
