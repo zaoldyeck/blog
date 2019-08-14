@@ -62,7 +62,7 @@ canonifyURLs = true
   # required for proper functionality. HTML is supported within the params.
   [params.intro]
     header                = "靈性思維"
-    paragraph             = "Another fine, responsive site template by <a href='http://html5up.net'>HTML5 UP</a>."
+    paragraph             = "江品陞, 靈性思維導師"
     rssIntro              = true
     socialIntro           = true
 
