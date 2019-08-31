@@ -232,5 +232,4 @@ canonifyurls = true
   # [params.footer]
   #   copyright = "<a href=\"https://github.com/kakawait\">kakawait</a>"
 
-[imaging]
-anchor = "center"
+disqusShortname = "spirit-mind"
