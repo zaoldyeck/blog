@@ -17,7 +17,7 @@ languageCode = "zh-tw"
 defaultContentLanguage = "zh-tw"
 title = "靈性思維 在生活裡實踐"
 theme = "tranquilpeak"
-disqusShortname = "靈性思維"
+disqusShortname = "spirit-mind"
 # googleAnalytics = "UA-123-45"
 paginate = 7
 canonifyurls = true
@@ -231,5 +231,3 @@ canonifyurls = true
   # Customize copyright value "© 2017 <CUSTOMIZATION>. All Rights Reserved"
   # [params.footer]
   #   copyright = "<a href=\"https://github.com/kakawait\">kakawait</a>"
-
-disqusShortname = "spirit-mind"
