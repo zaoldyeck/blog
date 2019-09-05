@@ -1,7 +1,7 @@
 +++
 title = "思想的超時空性，吸引力法則運作原理"
 description = "關於吸引力法則的真正運作模式"
-date = "2019-08-20"
+date = "2019-04-28"
 categories = ["奇蹟課程"]
 tags = ["吸引力法則", "秘密", "奇蹟課程"]
 slug = "the-principle-of-law-of-attraction"
