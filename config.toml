@@ -18,7 +18,7 @@ defaultContentLanguage = "zh-tw"
 title = "靈性思維 在生活裡實踐"
 theme = "tranquilpeak"
 disqusShortname = "spirit-mind"
-# googleAnalytics = "UA-123-45"
+googleAnalytics = "UA-44235961-3"
 paginate = 7
 canonifyurls = true
 
@@ -136,7 +136,7 @@ canonifyurls = true
   # If false it will flat categories.
   hierarchicalCategories = false
 
-  description = "Hugo tranquilpeak theme demo"
+  description = "靈性思維 在生活裡實踐"
 
   # Customization
   # Define the behavior of the sidebar

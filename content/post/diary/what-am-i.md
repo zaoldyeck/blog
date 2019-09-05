@@ -1,13 +1,13 @@
 +++
 title = "「我」究竟是什麼？"
 description = ""
-date = "2019-08-14"
-categories = ["奇蹟日記"]
-#slug = "spf13-vim-3-0-release-and-new-website"
-#tags = [".vimrc", "plugins", "spf13-vim", "vim"]
+date = "2019-08-31"
+categories = ["奇蹟課程"]
+tags = ["吸引力法則", "秘密", "奇蹟課程"]
+slug = "what-am-i"
+thumbnailImage = "https://unsplash.com/@paulgilmore_?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge"
 type = "post"
 draft = true
-
 +++
 
 各位有沒有想過「我」的定義？
