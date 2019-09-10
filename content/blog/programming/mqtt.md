@@ -21,3 +21,8 @@ draft = true
 
 broadcast MQTT port
 `avahi-publish -s KKLINX-LINUX _kklinx._tcp 5566 CPath=/device &`
+
+`sudo vi /etc/mosquitto/conf.d/mosquitto.conf`
+Add `listener 1883 127.0.0.1`
+`sudo pkill -u mosquitto`
+`sudo mosquitto -c /etc/mosquitto/conf.d/mosquitto.conf`
