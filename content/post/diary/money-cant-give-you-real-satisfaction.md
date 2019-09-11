@@ -1,12 +1,13 @@
 +++
 title = "金錢無法帶給你真正的滿足"
-#description = "spf13-vim is a cross platform distribution of vim plugins and resources for Vim."
+description = ""
 date = "2019-08-14"
 categories = ["奇蹟日記"]
 #slug = "spf13-vim-3-0-release-and-new-website"
 #tags = [".vimrc", "plugins", "spf13-vim", "vim"]
 type = "post"
 draft = true
+
 +++
 
 我也是一個極度追求財富的人
@@ -22,3 +23,4 @@ draft = true
 離職時，主管慰留我，我提到我對於薪水非常不滿意，他說會幫我的忙，明年度調薪後不會再讓我那麼委屈
 
 隔了一年調薪後，雖然離我的理想薪資還有一段落差。至少讓我沒有被
+
