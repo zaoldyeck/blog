@@ -8,7 +8,6 @@ slug = "the-principle-of-law-of-attraction"
 thumbnailImage = "https://miro.medium.com/max/1000/0*0N45XGj2MD1sZMe2.jpg"
 type = "post"
 draft = false
-
 +++
 
 前幾天獲得靈感看了一部電影，叫做「[異星入境](https://zh.wikipedia.org/wiki/降临_(电影))」，以下為電影劇透：
