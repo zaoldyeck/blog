@@ -18,3 +18,5 @@ date = "2019-08-08"
 </br>
 
 *如不想錯過最新文章，可追蹤[粉絲專頁](https://www.facebook.com/靈性思維-111592156852356/)。
+
+https://mopcon.kktix.cc/events/2019registernormal
