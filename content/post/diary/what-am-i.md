@@ -2,7 +2,7 @@
 title = "「我」究竟是什麼？"
 description = ""
 date = "2019-08-31"
-categories = ["奇蹟課程"]
+categories = ["奇蹟日記"]
 tags = ["吸引力法則", "秘密", "奇蹟課程"]
 slug = "what-am-i"
 thumbnailImage = "https://unsplash.com/@paulgilmore_?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge"
