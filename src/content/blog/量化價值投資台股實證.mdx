@@ -1,0 +1,166 @@
+---
+title: '量化價值投資台股實證'
+description: '大概是高中的時候看了一本《有錢人想的和你不一樣》的書後開始對投資有興趣。人學習一個領域自然會向該領域最突出的人看齊，剛好巴菲特當時出了一本自傳−雪球，書名非常契合他的人生輪廓，也就是複利的威力。'
+pubDate: 'Sun, 05 May 2019 16:03:12 GMT'
+tags: ['value-investing', 'stock-market', 'quant', 'python']
+heroImage: 'https://cdn-images-1.medium.com/max/1024/1*eY0e5bVL8zn0JhMt34Ht3g.png'
+---
+
+import LiteYoutube from '../../components/LiteYoutube.astro';
+
+大概是高中的時候看了一本《[有錢人想的和你不一樣](https://www.books.com.tw/products/0010316121)》的書後開始對投資有興趣。人學習一個領域自然會向該領域最突出的人看齊，剛好巴菲特當時出了一本自傳−[雪球](https://www.books.com.tw/products/0010800797)，書名非常契合他的人生輪廓，也就是複利的威力。
+
+巴菲特的價值投資心法簡單來說就兩句話：  
+1. 用便宜的價格  
+2. 買好公司
+
+實務在操作的時候我們會先看標的是否是好公司，是的話才會進一步做估值、推算出適合買入的便宜價格。
+
+#### 好公司的衡量指標
+
+衡量好公司有一句心法，就是「**公司每投入一塊錢，可以賺得多少現金？**」我們可以從[股東權益報酬率](https://zh.wikipedia.org/wiki/%E8%82%A1%E6%9C%AC%E5%9B%9E%E5%A0%B1%E7%8E%87)（ROE）觀察這個指標。另外，如果擔心公司過度使用槓桿（借貸）來提高 ROE，可以參考[總資產報酬率](https://zh.wikipedia.org/wiki/%E8%B5%84%E4%BA%A7%E6%94%B6%E7%9B%8A%E7%8E%87)（ROA）這個指標。
+
+> [台股 3 年平均 ROE 排行](http://pchome.megatime.com.tw/rank/sto5/ock15.html)  
+> [台股 3 年平均 ROA 排行](http://pchome.megatime.com.tw/rank/sto5/ock18.html)
+
+#### 推算便宜的價格
+
+很多坊間的書籍都會教你看[本益比](https://zh.wikipedia.org/wiki/%E5%B8%82%E7%9B%88%E7%8E%87)（PER）或是[股價淨值比](https://zh.wikipedia.org/wiki/%E5%B8%82%E5%87%80%E7%8E%87)（PB），這是一個很簡單的方式，只要觀察這間公司的[歷史 PER/PB 走勢圖](https://pro.uanalyze.com.tw/lab/freebie/stock-valuation)，就可以知道目前價格落在歷史高低點的哪一個位置。
+
+更進階一點的方式，就是計算[自由現金流](https://zh.wikipedia.org/wiki/%E8%87%AA%E7%94%B1%E7%8F%BE%E9%87%91%E6%B5%81%E9%87%8F)，再透過[現金流折現模型](https://zh.wikipedia.org/wiki/%E7%8E%B0%E9%87%91%E6%B5%81%E6%8A%98%E7%8E%B0%E6%A8%A1%E5%9E%8B)進行估值，理由是公司的盈餘並不會全部分配給股東，很多公司往往為了維持（提高）市場競爭力，會將盈餘做再投資（資本支出），自由現金流是計算公司進行必要性資本支出後真正可以分配的現金。
+
+> 自由現金流的數據在某些[網站](https://pro.uanalyze.com.tw/lab/freebie/stockbasicinfo-statementofcashflow)裡有提供
+
+由於每個產業的[盈餘再投資比率](http://smart.businessweekly.com.tw/Reading/WebArticle.aspx?ID=38494)不同，所以絕對不能單純的把兩間相同本益比的公司放在一起比較。
+
+#### 人工選股的問題
+
+運用價值投資法非常吃重個人在該產業的領域知識−找到有護城河的股票、ROE 高、股價相對便宜。可能你每天花時間研究一檔股票，研究了一個月才終於有一檔股票可以買；更多的情況是若大盤處於多頭，你會連一檔股票都沒得買（因為認識的股票都處於高價位），這時你會聽到有經驗的價值投資人告訴你：「要有耐心。」
+
+有沒有什麼方法可以節省大量的時間幫助我們挑出好公司、而且股價相對便宜？
+
+就算大盤處於多頭，是否仍有相對便宜的好公司，只是我們不知道？有沒有有效率的方法可以幫助我們找到這樣的公司？
+
+#### 量化投資
+
+初次接觸量化投資的概念，是讀到《[神奇公式](https://www.stockfeel.com.tw/%E6%8F%AD%E9%96%8B%E5%96%AC%E4%BC%8A%E3%83%BB%E8%91%9B%E6%9E%97%E5%B8%83%E9%9B%B7-%E7%A5%9E%E5%A5%87%E5%85%AC%E5%BC%8F%E7%9A%84%E9%9D%A2%E7%B4%97/)》這篇文章，神奇公式是 Joel Greenblatt 研發的一種選股策略，他把巴菲特的價值投資法化為可用數學表達的函式，只要將所有公司財報資料輸入這個函式，它就會輸出好公司且價格便宜的股票綜合排行。
+
+神奇公式衡量好公司的方法，是用 [ROIC](https://zh.wikipedia.org/wiki/%E6%8A%95%E5%85%A5%E8%B3%87%E6%9C%AC%E5%9B%9E%E5%A0%B1%E7%8E%87)
+
+> ROIC = EBIT/IC  
+> EBIT = 稅前淨利  
+> IC = 總資產 — 流動負債
+
+使用 EBIT 的原因，是因為每間公司的稅率不同，使用稅前淨利可以更公平的比較不同公司的獲利能力。IC 則是公司真正可以動用的長期資本。
+
+神奇公式衡量價格是否便宜的方法，是用 Earnings Yield
+
+> Earnings Yield = EBIT / EV  
+> EV(企業價值) = 公司市值 + 總負債 — 現金
+
+EV 代表若要買下這間公司真正要付出的成本。
+
+神奇公式會計算 ROIC 排行、Earnings Yield 排行，再把同支股票兩個排行的名次相加，最後得到綜合排行，排行越高即代表為好公司且擁有相對便宜的價格。
+
+#### 回測
+
+托《[用 Python 理財：打造小資族選股策略](https://hahow.in/cr/python-finance)》課程提供的回測框架的福，我們可以實作神奇公式並在台股市場做回測，以下是回測環境：
+
+> 起始日期：2014–5–16  
+> 結束日期：2019–4–1  
+> 再平衡時間：每個季報發布後一日（4–1 / 5–16/ 8–15 / 11–15）  
+> \*再平衡：把持有股票通通賣掉、再重新選股買入  
+> 策略：神奇公式 => 每次挑出排行前 10 檔股票買入  
+> 其他條件：剔除回測期間有進行減資的股票、未考慮交易手續費、未納入現金及股票股利
+
+#### 結果
+
+年化報酬率 : 9.61 ％  
+每次換手最大報酬率 : 22.26 ％  
+每次換手最低報酬率 : -13.78 ％  
+勝率：49 %  
+期望報酬：3 %  
+獲利因子：1.51  
+恢復因子：1.91  
+夏普比率：0.15
+
+以下是神奇公式與[台灣 50](https://zh.wikipedia.org/wiki/%E5%85%83%E5%A4%A7%E5%8F%B0%E7%81%A3%E5%8D%93%E8%B6%8A50%E8%AD%89%E5%88%B8%E6%8A%95%E8%B3%87%E4%BF%A1%E8%A8%97%E5%9F%BA%E9%87%91) ETF 的報酬率曲線及 Dropdown 比較圖
+
+![](https://cdn-images-1.medium.com/max/1024/1*eY0e5bVL8zn0JhMt34Ht3g.png)![](https://cdn-images-1.medium.com/max/1024/1*BgRDphFcO7XzXXMMZhVK1Q.png)
+
+從回測結果來看，非常不如預期。難道神奇公式在台股不管用？甚至更武斷一點說，難道價值投資法在台股不管用？
+
+觀察神奇公式選出的標的後會發現，雖然標的確實處於低價，但是財報的各項數值皆不盡理想，也就是說，好公司與便宜價的衡量權重不應該等值，我們應該選擇財務狀況超過一定門檻的公司再來考慮它便不便宜。那有沒有一種量化方式可以幫助我們全面性的評估一間公司的財務狀況，最好還能劃分出等級呢？有，就是 [F-Score](https://en.wikipedia.org/wiki/Piotroski_F-Score)。
+
+#### F-Score
+
+F-Score 由 Joseph Piotroski 所提出，用 9 項指標衡量一間公司的 3 大財務面向，每一項指標通過為 1 分，滿分為 9 分。
+
+> 3 大面向與 9 項指標：  
+> Profitability  
+> 1. ROA > 0  
+> 2. CFROA（營業活動淨現金流 / 總資產） > 0  
+> 3. 今年度 ROA > 去年度 ROA  
+> 4. CFROA > ROA
+
+> Leverage, Liquidity and Source of Funds  
+> 5. 今年度長期負債 &lt; 去年度長期負債  
+> 6. 今年度流動性（流動資產 / 流動負債） > 去年度流動性  
+> 7. 今年度股本 &lt; 去年度股本
+
+> Operating Efficiency  
+> 8. 今年度毛利率 > 去年度毛利率  
+> 9. 今年度資產週轉率（營收 / 總資產） > 去年度資產週轉率
+
+我們將策略改為篩選出 F-Score ≥ 8 分的股票後，再根據神奇公式買入排行前 10 檔股票，其他環境不變，進行回測。
+
+#### 結果
+
+年化報酬率 : 20.62 ％  
+每次換手最大報酬率 : 33.59 ％  
+每次換手最低報酬率 : -10.41 ％  
+勝率：56 %  
+期望報酬：5.5 %  
+獲利因子：2.23  
+恢復因子：5.9  
+夏普比率：0.27
+
+以下是與[台灣 50](https://zh.wikipedia.org/wiki/%E5%85%83%E5%A4%A7%E5%8F%B0%E7%81%A3%E5%8D%93%E8%B6%8A50%E8%AD%89%E5%88%B8%E6%8A%95%E8%B3%87%E4%BF%A1%E8%A8%97%E5%9F%BA%E9%87%91) ETF 的報酬率曲線及 Dropdown 比較圖
+
+![](https://cdn-images-1.medium.com/max/1024/1*42zN4u9rRtlTK1IfHSXZ5A.png)![](https://cdn-images-1.medium.com/max/1024/1*uCa05Hz9tUAEPgN-rK160Q.png)
+
+年化報酬率提高到了 20.62 ％，證明這個策略有用。最後我們再用一些平常都會看的簡單指標進一步優化策略：
+
+> 除了 F-Score ≥ 8 分以外，還需滿足以下條件，再使用神奇公式  
+> 月營收年增率 > 0  
+> 營業利益年增率 > 0  
+> 營業活動現金流量 — 投資活動現金量 > 0
+
+回測結果：
+
+年化報酬率 : 25.09 ％  
+每次換手最大報酬率 : 21.91 ％  
+每次換手最低報酬率 : -8.34 ％  
+勝率：62 %  
+期望報酬：6.2 %  
+獲利因子：2.84  
+恢復因子：9.49  
+夏普比率：0.34
+
+與[台灣 50](https://zh.wikipedia.org/wiki/%E5%85%83%E5%A4%A7%E5%8F%B0%E7%81%A3%E5%8D%93%E8%B6%8A50%E8%AD%89%E5%88%B8%E6%8A%95%E8%B3%87%E4%BF%A1%E8%A8%97%E5%9F%BA%E9%87%91) ETF 的報酬率曲線及 Dropdown 比較圖
+
+![](https://cdn-images-1.medium.com/max/1024/1*YR6rtgmVDKLxknUJtfr99w.png)![](https://cdn-images-1.medium.com/max/1024/1*eR1nW4W8EiVg_g8klegHEQ.png)
+
+#### 總結
+
+本文章簡述了價值投資法，還有在財務上表達的意義，並運用函式、模型及回測框架證明價值投資法在台股市場上有用。文中刻意不使用技術分析指標來優化策略（雖然它確實會提高績效）以避免主旨失焦。推薦投資人不論你本來使用什麼樣的方法進行投資，量化投資都可以為你省下大量寶貴的時間、且更客觀地進行決策。
+
+本文章實作的程式碼（不含 [Finlab](https://www.finlab.tw/) 提供的 Library）都放在 quant-tw 的 GitHub [Repository](https://github.com/quant-tw/quant-investing/blob/master/MFPiot.ipynb)。若遇到 GitHub 的 Jupyter Notebook 顯示不出來，可以到這個[網址](https://nbviewer.jupyter.org/github/quant-tw/quant-investing/blob/master/MFPiot.ipynb)查閱。
+
+我是 [Python 量化投資社團](https://www.facebook.com/groups/pyquant/)的共同創辦人，往後有新的研究成果會陸續發表、並舉辦實體讀書會，歡迎加入社團交流。
+
+推薦閱讀
+
+> [Does systematic value investing really work?](https://www.quant-investing.com/blogs/general/2018/05/17/does-systematic-value-investing-really-work-data-driven-backtest)
+
+![](https://medium.com/_/stat?event=post.clientViewed&referrerSource=full_rss&postId=3b52dd4f1009)
