@@ -1,0 +1,523 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+---
+
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <BaseHead title={`線上諮詢預約 | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+    <main class="booking-main">
+      <div class="booking-header">
+        <h1 class="accent-text">預約一對一線上諮詢</h1>
+        <p class="booking-subtitle">選擇適合您的時間，我們將進行深度的技術或職涯對談。</p>
+      </div>
+
+      <div class="booking-container">
+        <!-- Cal.com Embedded Widget Placeholder & Demo Mock -->
+        <div class="glass-panel widget-card">
+          <div class="widget-header">
+            <span class="status-indicator"></span>
+            <span class="widget-title-text">Cal.com 預約元件 (互動演示中)</span>
+          </div>
+          
+          <!-- Mock Calendar Interactive UI -->
+          <div id="mock-booking-system" class="mock-calendar-grid">
+            <div class="calendar-panel">
+              <h4 class="panel-title">選擇日期 (2026年 7月)</h4>
+              <div class="date-selector">
+                <button type="button" class="date-btn active" data-date="7月15日 (三)">15<span class="day-label">週三</span></button>
+                <button type="button" class="date-btn" data-date="7月16日 (四)">16<span class="day-label">週四</span></button>
+                <button type="button" class="date-btn" data-date="7月17日 (五)">17<span class="day-label">週五</span></button>
+                <button type="button" class="date-btn" data-date="7月20日 (一)">20<span class="day-label">週一</span></button>
+                <button type="button" class="date-btn" data-date="7月21日 (二)">21<span class="day-label">週二</span></button>
+              </div>
+            </div>
+
+            <div class="time-panel">
+              <h4 class="panel-title">選擇時段 (<span id="selected-date-text">7月15日 (三)</span>)</h4>
+              <div class="time-selector">
+                <button type="button" class="time-btn active" data-time="09:30 - 10:30">09:30</button>
+                <button type="button" class="time-btn" data-time="11:00 - 12:00">11:00</button>
+                <button type="button" class="time-btn" data-time="14:00 - 15:00">14:00</button>
+                <button type="button" class="time-btn" data-time="16:00 - 17:00">16:00</button>
+              </div>
+            </div>
+
+            <div class="form-panel">
+              <h4 class="panel-title">填寫基本資料</h4>
+              <form id="booking-form" class="booking-form">
+                <div class="form-group">
+                  <label for="booking-name">您的姓名 *</label>
+                  <input type="text" id="booking-name" required placeholder="例如：王小明" />
+                </div>
+                <div class="form-group">
+                  <label for="booking-email">電子信箱 *</label>
+                  <input type="email" id="booking-email" required placeholder="name@example.com" />
+                </div>
+                <div class="form-group">
+                  <label for="booking-note">諮詢主題與簡述 *</label>
+                  <textarea id="booking-note" required rows="3" placeholder="例如：我的電商網站面臨結帳併發效能瓶頸，想諮詢架構調整..."></textarea>
+                </div>
+                <button type="submit" class="submit-btn">確認預約諮詢</button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Successful Screen -->
+          <div id="booking-success-screen" class="success-screen hidden">
+            <div class="success-icon">🎉</div>
+            <h2>預約已提交！</h2>
+            <p>
+              我們已收到您的預約申請。確認信件將寄送至您的信箱：<br />
+              <strong id="success-email"></strong>
+            </p>
+            <div class="success-details">
+              <p>📅 <strong>時間：</strong> <span id="success-datetime"></span></p>
+              <p>💬 <strong>主題：</strong> <span id="success-summary"></span></p>
+            </div>
+            <button type="button" id="reset-booking-btn" class="reset-btn">重新預約</button>
+          </div>
+        </div>
+
+        <!-- Documentation Card for Engineer -->
+        <div class="glass-panel doc-card">
+          <h3>🛠️ 工程師整合說明 (Cal.com Live Integration)</h3>
+          <p>
+            本頁面目前運作於<strong>演示模式</strong>。當您準備好上線時，只需依循以下步驟替換為真實的 Cal.com 嵌入式程式碼：
+          </p>
+          <ol class="doc-steps">
+            <li>註冊 <a href="https://cal.com" target="_blank" rel="noopener noreferrer">Cal.com</a> 帳戶並設定您的一對一諮詢活動項目。</li>
+            <li>開啟 `src/pages/booking.astro`，將 `<div id="mock-booking-system">...</div>` 的內容替換為下方 Cal.com 官方 React/HTML 內嵌標籤：</li>
+          </ol>
+          <pre><code>&lt;!-- Cal.com 內嵌語法 --&gt;
+&lt;div id="cal-inline" style="width:100%; height: 600px;"&gt;&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+  (function (C, A, L) &#123;
+    C.Cal = C.Cal || function () &#123;
+      var o = C.Cal.q = C.Cal.q || [];
+      o.push(arguments)
+    &#125;;
+    var d = A.getElementsByTagName("script")[0];
+    var s = A.createElement("script");
+    s.async = !0; s.src = "https://app.cal.com/embed/embed.js";
+    d.parentNode.insertBefore(s, d);
+    C.Cal("init", &#123; origin: "https://app.cal.com" &#125;);
+    C.Cal("inline", &#123;
+      elementOrSelector: "#cal-inline",
+      calLink: "your-username/consulting", // 👈 替換為您的真實連結
+      config: &#123; layout: "month_view" &#125;
+    &#125;);
+  &#125;)(window, document, "Cal");
+&lt;/script&gt;</code></pre>
+        </div>
+      </div>
+    </main>
+    <Footer />
+
+    <script>
+      function setupBooking() {
+        const dateBtns = document.querySelectorAll('.date-btn');
+        const timeBtns = document.querySelectorAll('.time-btn');
+        const selectedDateText = document.getElementById('selected-date-text');
+        
+        let selectedDate = "7月15日 (三)";
+        let selectedTime = "09:30 - 10:30";
+
+        // Date selection
+        dateBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            dateBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const dateVal = btn.getAttribute('data-date');
+            if (dateVal && selectedDateText) {
+              selectedDate = dateVal;
+              selectedDateText.textContent = dateVal;
+            }
+          });
+        });
+
+        // Time selection
+        timeBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            timeBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const timeVal = btn.getAttribute('data-time');
+            if (timeVal) {
+              selectedTime = timeVal;
+            }
+          });
+        });
+
+        // Form submission
+        const form = document.getElementById('booking-form') as HTMLFormElement;
+        const mockSystem = document.getElementById('mock-booking-system');
+        const successScreen = document.getElementById('booking-success-screen');
+        const successEmail = document.getElementById('success-email');
+        const successDatetime = document.getElementById('success-datetime');
+        const successSummary = document.getElementById('success-summary');
+
+        if (form && mockSystem && successScreen) {
+          form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = (document.getElementById('booking-name') as HTMLInputElement).value;
+            const email = (document.getElementById('booking-email') as HTMLInputElement).value;
+            const note = (document.getElementById('booking-note') as HTMLTextAreaElement).value;
+
+            if (successEmail) successEmail.textContent = email;
+            if (successDatetime) successDatetime.textContent = `${selectedDate} ${selectedTime}`;
+            if (successSummary) successSummary.textContent = note;
+
+            mockSystem.classList.add('hidden');
+            successScreen.classList.remove('hidden');
+          });
+        }
+
+        // Reset
+        const resetBtn = document.getElementById('reset-booking-btn');
+        if (resetBtn && mockSystem && successScreen && form) {
+          resetBtn.addEventListener('click', () => {
+            form.reset();
+            successScreen.classList.add('hidden');
+            mockSystem.classList.remove('hidden');
+          });
+        }
+      }
+
+      setupBooking();
+      document.addEventListener('astro:page-load', setupBooking);
+    </script>
+  </body>
+</html>
+
+<style>
+  .booking-main {
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
+
+  .booking-header {
+    text-align: center;
+  }
+
+  .booking-header h1 {
+    font-size: 3rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .booking-subtitle {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+  }
+
+  .booking-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .widget-card {
+    padding: 2.5rem;
+  }
+
+  .widget-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .status-indicator {
+    width: 10px;
+    height: 10px;
+    background-color: #10b981;
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+  }
+
+  .widget-title-text {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  /* Mock Calendar Grid */
+  .mock-calendar-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    transition: opacity 0.3s ease;
+  }
+
+  .mock-calendar-grid.hidden {
+    display: none;
+  }
+
+  .calendar-panel, .time-panel, .form-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .form-panel {
+    grid-column: span 2;
+    border-top: 1px solid var(--border-color);
+    padding-top: 2rem;
+    margin-top: 0.5rem;
+  }
+
+  .panel-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  .date-selector {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0.75rem;
+  }
+
+  .date-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 0.5rem;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 1.25rem;
+    font-weight: 700;
+    transition: all var(--transition-fast);
+  }
+
+  .date-btn.active, .date-btn:hover {
+    border-color: var(--accent);
+    color: var(--text-primary);
+    background-color: rgba(99, 102, 241, 0.08);
+  }
+
+  .day-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+  }
+
+  .time-selector {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .time-btn {
+    padding: 1rem;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all var(--transition-fast);
+  }
+
+  .time-btn.active, .time-btn:hover {
+    border-color: var(--accent);
+    color: var(--text-primary);
+    background-color: rgba(99, 102, 241, 0.08);
+  }
+
+  /* Form Styling */
+  .booking-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-group:last-of-type {
+    grid-column: span 2;
+  }
+
+  .form-group label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+
+  .form-group input, .form-group textarea {
+    padding: 0.8rem 1rem;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color var(--transition-fast);
+  }
+
+  .form-group input:focus, .form-group textarea:focus {
+    border-color: var(--accent);
+  }
+
+  .submit-btn {
+    grid-column: span 2;
+    padding: 1rem;
+    border-radius: var(--border-radius-sm);
+    background: var(--accent-gradient);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.2);
+    transition: all var(--transition-fast);
+    margin-top: 0.5rem;
+  }
+
+  .submit-btn:hover {
+    background: var(--accent-gradient-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.35);
+  }
+
+  /* Success Screen */
+  .success-screen {
+    text-align: center;
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .success-screen.hidden {
+    display: none;
+  }
+
+  .success-icon {
+    font-size: 4rem;
+  }
+
+  .success-details {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    padding: 1.5rem 2rem;
+    text-align: left;
+    max-width: 450px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 1rem 0;
+  }
+
+  .success-details p {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  .reset-btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--border-color);
+    background-color: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all var(--transition-fast);
+  }
+
+  .reset-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* Documentation Card */
+  .doc-card {
+    padding: 2.5rem;
+    border-color: rgba(99, 102, 241, 0.15);
+  }
+
+  .doc-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .doc-card p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.25rem;
+  }
+
+  .doc-steps {
+    padding-left: 1.25rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .doc-steps li {
+    margin-bottom: 0.5rem;
+  }
+
+  .doc-card pre {
+    margin: 0;
+    padding: 1rem 1.25rem;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+  }
+
+  .doc-card code {
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    border: none;
+    background: transparent;
+    padding: 0;
+  }
+
+  @media (max-width: 768px) {
+    .mock-calendar-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    .form-panel {
+      grid-column: span 1;
+    }
+    .booking-form {
+      grid-template-columns: 1fr;
+    }
+    .form-group:last-of-type {
+      grid-column: span 1;
+    }
+    .submit-btn {
+      grid-column: span 1;
+    }
+    .widget-card, .doc-card {
+      padding: 1.5rem;
+    }
+  }
+</style>

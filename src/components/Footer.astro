@@ -1,0 +1,132 @@
+---
+const today = new Date();
+---
+
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-brand">
+      <div class="footer-logo">
+        <span class="logo-dot"></span>
+        <span class="logo-text">Blog</span>
+      </div>
+      <p class="footer-desc">分享技術、生活與商業洞察的個人部落格。</p>
+    </div>
+    <div class="footer-links">
+      <div class="link-group">
+        <h4>導覽</h4>
+        <a href="/">首頁</a>
+        <a href="/blog">部落格</a>
+        <a href="/about">關於我</a>
+      </div>
+      <div class="link-group">
+        <h4>服務</h4>
+        <a href="/booking">諮詢預約</a>
+        <a href="/pricing">付費方案</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; {today.getFullYear()} Blog. All rights reserved. Built with Astro & Cloudflare.</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--border-color);
+    padding: 4rem 2rem 2rem 2rem;
+    margin-top: 6rem;
+    transition: background-color var(--transition-normal);
+  }
+
+  .footer-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 4rem;
+    margin-bottom: 3rem;
+  }
+
+  .footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: var(--text-primary);
+  }
+
+  .logo-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--accent-gradient);
+    border-radius: 50%;
+  }
+
+  .footer-desc {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    max-width: 320px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 4rem;
+  }
+
+  .link-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .link-group h4 {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .link-group a {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .link-group a:hover {
+    color: var(--accent);
+  }
+
+  .footer-bottom {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+    text-align: center;
+  }
+
+  .footer-bottom p {
+    color: var(--text-muted);
+    font-size: 0.875rem;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .footer-content {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .footer-links {
+      gap: 3rem;
+    }
+  }
+</style>

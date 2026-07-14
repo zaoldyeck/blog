@@ -1,0 +1,205 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+
+type Props = CollectionEntry<'blog'>['data'];
+
+const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+---
+
+<html lang="zh-Hant">
+  <head>
+    <BaseHead title={`${title} | DevInsight`} description={description} />
+  </head>
+
+  <body>
+    <Header />
+    <main class="post-layout-main">
+      <article class="post-article">
+        <div class="post-back-nav">
+          <a href="/blog" class="back-link">&larr; 返回部落格文章</a>
+        </div>
+        
+        {heroImage && (
+          <div class="post-hero-image-wrapper">
+            <img src={heroImage} alt={title} class="post-hero-image" loading="eager" />
+          </div>
+        )}
+
+        <div class="post-container">
+          <header class="post-header">
+            <div class="post-meta">
+              <span class="post-date">
+                發布於 <FormattedDate date={pubDate} />
+              </span>
+              {updatedDate && (
+                <span class="post-updated-date">
+                  （更新於 <FormattedDate date={updatedDate} />）
+                </span>
+              )}
+            </div>
+            <h1 class="post-title">{title}</h1>
+            <p class="post-description">{description}</p>
+            <hr class="post-divider" />
+          </header>
+
+          <div class="post-content prose">
+            <slot />
+          </div>
+        </div>
+      </article>
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .post-layout-main {
+    max-width: 800px;
+    padding: 2rem 1.5rem;
+  }
+
+  .post-article {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .post-back-nav {
+    margin-bottom: 0.5rem;
+  }
+
+  .back-link {
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    transition: color var(--transition-fast);
+  }
+
+  .back-link:hover {
+    color: var(--accent);
+  }
+
+  .post-hero-image-wrapper {
+    width: 100%;
+    aspect-ratio: 2/1;
+    overflow: hidden;
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--box-shadow);
+    border: 1px solid var(--border-color);
+  }
+
+  .post-hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+  }
+
+  .post-container {
+    padding: 1rem 0;
+  }
+
+  .post-header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .post-meta {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .post-title {
+    font-size: 3rem;
+    line-height: 1.2;
+    margin: 0;
+    letter-spacing: -0.03em;
+    color: var(--text-primary);
+  }
+
+  .post-description {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0.5rem 0 0 0;
+  }
+
+  .post-divider {
+    margin-top: 1.5rem;
+    margin-bottom: 0;
+  }
+
+  /* Prose / Content Styling */
+  .post-content {
+    color: var(--text-secondary);
+    line-height: 1.8;
+    font-size: 1.125rem;
+  }
+
+  .post-content :global(p) {
+    margin-bottom: 1.75rem;
+  }
+
+  .post-content :global(h2) {
+    font-size: 1.85rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .post-content :global(h3) {
+    font-size: 1.45rem;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .post-content :global(ul), .post-content :global(ol) {
+    margin-bottom: 1.75rem;
+    padding-left: 1.5rem;
+  }
+
+  .post-content :global(li) {
+    margin-bottom: 0.5rem;
+  }
+
+  .post-content :global(li::marker) {
+    color: var(--accent);
+  }
+
+  .post-content :global(strong) {
+    color: var(--text-primary);
+  }
+
+  .post-content :global(a) {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    font-weight: 500;
+  }
+
+  .post-content :global(a:hover) {
+    color: var(--accent-light);
+  }
+
+  .post-content :global(img) {
+    margin: 2.5rem 0;
+    width: 100%;
+    border-radius: var(--border-radius-md);
+  }
+
+  @media (max-width: 768px) {
+    .post-title {
+      font-size: 2.25rem;
+    }
+    .post-hero-image-wrapper {
+      border-radius: var(--border-radius-md);
+    }
+  }
+</style>

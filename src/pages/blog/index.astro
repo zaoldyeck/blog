@@ -1,0 +1,275 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../../components/BaseHead.astro';
+import Footer from '../../components/Footer.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Header from '../../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+---
+
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <BaseHead title={`所有文章 | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+    <main class="blog-main">
+      <div class="blog-header">
+        <h1 class="accent-text">部落格文章</h1>
+        <p class="blog-subtitle">技術探討、架構設計實戰與最新科技趨勢分享</p>
+      </div>
+
+      <section class="posts-section">
+        {posts.length > 0 && (
+          <div class="featured-post-container">
+            <article class="glass-panel featured-card">
+              <a href={`/blog/${posts[0].id}/`} class="featured-link">
+                {posts[0].data.heroImage && (
+                  <div class="featured-image-wrapper">
+                    <img src={posts[0].data.heroImage} alt={posts[0].data.title} class="featured-image" loading="eager" />
+                  </div>
+                )}
+                <div class="featured-content">
+                  <span class="featured-badge">精選文章</span>
+                  <div class="post-date">
+                    <FormattedDate date={posts[0].data.pubDate} />
+                  </div>
+                  <h2 class="featured-title">{posts[0].data.title}</h2>
+                  <p class="featured-desc">{posts[0].data.description}</p>
+                  <span class="read-more-btn">閱讀全文 &rarr;</span>
+                </div>
+              </a>
+            </article>
+          </div>
+        )}
+
+        <div class="regular-posts-grid">
+          {posts.slice(1).map((post) => (
+            <article class="glass-panel post-card">
+              <a href={`/blog/${post.id}/`} class="post-card-link">
+                {post.data.heroImage && (
+                  <div class="post-card-image-wrapper">
+                    <img src={post.data.heroImage} alt={post.data.title} class="post-card-image" loading="lazy" />
+                  </div>
+                )}
+                <div class="post-card-content">
+                  <div class="post-date">
+                    <FormattedDate date={post.data.pubDate} />
+                  </div>
+                  <h3 class="post-title">{post.data.title}</h3>
+                  <p class="post-desc">{post.data.description}</p>
+                </div>
+              </a>
+            </article>
+          ))}
+        </div>
+      </section>
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style>
+  .blog-main {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  .blog-header {
+    text-align: center;
+    padding: 2rem 0 1rem 0;
+  }
+
+  .blog-header h1 {
+    font-size: 3rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .blog-subtitle {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+  }
+
+  .posts-section {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+  }
+
+  /* Featured Post Card */
+  .featured-post-container {
+    width: 100%;
+  }
+
+  .featured-card {
+    overflow: hidden;
+  }
+
+  .featured-link {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .featured-image-wrapper {
+    aspect-ratio: 16/10;
+    overflow: hidden;
+  }
+
+  .featured-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+    box-shadow: none;
+    transition: transform var(--transition-slow);
+  }
+
+  .featured-card:hover .featured-image {
+    transform: scale(1.03);
+  }
+
+  .featured-content {
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+  }
+
+  .featured-badge {
+    align-self: flex-start;
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--accent);
+    padding: 0.25rem 0.75rem;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border: 1px solid rgba(99, 102, 241, 0.15);
+  }
+
+  .featured-title {
+    font-size: 2rem;
+    line-height: 1.25;
+    margin: 0;
+    color: var(--text-primary);
+    transition: color var(--transition-fast);
+  }
+
+  .featured-card:hover .featured-title {
+    color: var(--accent);
+  }
+
+  .featured-desc {
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .read-more-btn {
+    font-weight: 600;
+    color: var(--accent);
+    margin-top: 0.5rem;
+  }
+
+  .post-date {
+    font-size: 0.875rem;
+    color: var(--text-muted);
+  }
+
+  /* Regular Posts Grid */
+  .regular-posts-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .post-card {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .post-card-link {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .post-card-image-wrapper {
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .post-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+    box-shadow: none;
+    transition: transform var(--transition-slow);
+  }
+
+  .post-card:hover .post-card-image {
+    transform: scale(1.05);
+  }
+
+  .post-card-content {
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    flex-grow: 1;
+  }
+
+  .post-title {
+    font-size: 1.35rem;
+    line-height: 1.4;
+    margin: 0;
+    color: var(--text-primary);
+    transition: color var(--transition-fast);
+  }
+
+  .post-card:hover .post-title {
+    color: var(--accent);
+  }
+
+  .post-desc {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin: 0;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  @media (max-width: 850px) {
+    .featured-link {
+      grid-template-columns: 1fr;
+    }
+    .featured-content {
+      padding: 1.75rem;
+    }
+    .regular-posts-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>

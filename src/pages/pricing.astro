@@ -1,0 +1,665 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+---
+
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <BaseHead title={`付費方案與服務 | ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+    <main class="pricing-main">
+      <div class="pricing-header">
+        <h1 class="accent-text">諮詢與顧問方案</h1>
+        <p class="pricing-subtitle">提供量身打造的專業技術諮詢與長期架構顧問服務，加速您的業務成長。</p>
+      </div>
+
+      <!-- Stripe Pricing Cards -->
+      <div class="plans-grid">
+        <!-- Plan 1 -->
+        <div class="glass-panel plan-card">
+          <div class="plan-header">
+            <h3 class="plan-name">單次深度諮詢</h3>
+            <p class="plan-desc">適合解決特定技術瓶頸、代碼評審或職涯方向諮詢。</p>
+          </div>
+          <div class="plan-price">
+            <span class="currency">NT$</span>
+            <span class="amount">2,500</span>
+            <span class="period">/ 60分鐘</span>
+          </div>
+          <ul class="plan-features">
+            <li>一對一 60 分鐘線上視訊會議</li>
+            <li>會前背景資料與問題需求調查</li>
+            <li>會議結束後提供重點對談摘要</li>
+            <li>支援台灣信用卡（Visa / Master / JCB）</li>
+          </ul>
+          <button type="button" class="checkout-btn" data-plan="單次深度諮詢" data-price="2500">立即預約付款</button>
+        </div>
+
+        <!-- Plan 2 (Popular) -->
+        <div class="glass-panel plan-card popular-plan">
+          <div class="popular-badge">最受歡迎 Choice</div>
+          <div class="plan-header">
+            <h3 class="plan-name">架構設計月諮詢</h3>
+            <p class="plan-desc">適合需要持續性技術指導、架構迭代設計的開發團隊。</p>
+          </div>
+          <div class="plan-price">
+            <span class="currency">NT$</span>
+            <span class="amount">12,000</span>
+            <span class="period">/ 月</span>
+          </div>
+          <ul class="plan-features">
+            <li>每月 4 次（每次 1 小時）線上會議</li>
+            <li>專屬 Slack/Line 加值非同步諮詢管道</li>
+            <li>每月最高 2 份核心模組 Code Review</li>
+            <li>架構優化與 Core Web Vitals 診斷書</li>
+          </ul>
+          <button type="button" class="checkout-btn primary-btn" data-plan="架構設計月諮詢" data-price="12000">訂閱顧問服務</button>
+        </div>
+
+        <!-- Plan 3 -->
+        <div class="glass-panel plan-card">
+          <div class="plan-header">
+            <h3 class="plan-name">企業級專屬顧問</h3>
+            <p class="plan-desc">專為中大型專案、複雜高併發微服務設計的深度整合服務。</p>
+          </div>
+          <div class="plan-price">
+            <span class="currency">NT$</span>
+            <span class="amount">45,000</span>
+            <span class="period">/ 月</span>
+          </div>
+          <ul class="plan-features">
+            <li>每週固定一次技術架構同步與對接</li>
+            <li>7/24 緊急技術諮詢與線上救火支援</li>
+            <li>專案完整 CI/CD 與雲端架構圖藍圖規劃</li>
+            <li>協助招募評審與核心技術面試</li>
+          </ul>
+          <button type="button" class="checkout-btn" data-plan="企業級專屬顧問" data-price="45000">聯絡我們洽談</button>
+        </div>
+      </div>
+
+      <!-- Payment flow interactive modal -->
+      <div id="stripe-checkout-modal" class="payment-modal-backdrop hidden">
+        <div class="glass-panel payment-modal">
+          <div class="modal-header">
+            <h4>Stripe Checkout 模擬安全付款</h4>
+            <button type="button" id="close-modal-btn" class="close-btn">&times;</button>
+          </div>
+          <div class="modal-body">
+            <p class="modal-intro">您即將透過 Stripe 支付至 <strong>DevInsight Technical Consulting</strong>：</p>
+            <div class="payment-summary">
+              <span id="modal-plan-name"></span>
+              <strong id="modal-plan-price"></strong>
+            </div>
+            
+            <div class="card-demo-graphic">
+              <!-- Mock Credit Card Input fields -->
+              <div class="card-brands">
+                <span class="brand-logo">VISA</span>
+                <span class="brand-logo">Mastercard</span>
+                <span class="brand-logo">JCB</span>
+              </div>
+              <p class="p-security">🔒 安全付款：使用 SSL 256 位元加密。您的信用卡資料不會留存於伺服器。</p>
+            </div>
+
+            <form id="mock-payment-form" class="mock-payment-form">
+              <div class="form-group">
+                <label for="card-num">卡號 (模擬請輸入 4242 4242...)</label>
+                <input type="text" id="card-num" required placeholder="4242 4242 4242 4242" pattern="[0-9\s]{16,19}" />
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="card-expiry">有效日期</label>
+                  <input type="text" id="card-expiry" required placeholder="MM/YY" pattern="(0[1-9]|1[0-2])\/[0-9]{2}" />
+                </div>
+                <div class="form-group">
+                  <label for="card-cvc">CVC 安全碼</label>
+                  <input type="text" id="card-cvc" required placeholder="123" pattern="[0-9]{3}" />
+                </div>
+              </div>
+              <button type="submit" class="pay-submit-btn" id="pay-submit-btn">確認付款</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payment Success Screen -->
+      <div id="payment-success-screen" class="payment-modal-backdrop hidden">
+        <div class="glass-panel payment-modal text-center">
+          <div class="success-icon">💳</div>
+          <h2>付款成功！</h2>
+          <p>感謝您的訂閱！Stripe 付款已安全授權完成。</p>
+          <div class="payment-summary margin-y">
+            <span id="success-plan-name"></span>
+            <strong id="success-plan-price"></strong>
+          </div>
+          <p class="modal-intro">系統已自動寄發確認信與發票至您的電子郵件信箱。接下來您可以前往預約頁面安排您的顧問時間。</p>
+          <div class="success-actions">
+            <a href="/booking" class="cta-button primary-cta">立即預約諮詢時間</a>
+            <button type="button" id="close-success-btn" class="reset-btn">回到方案頁面</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Technical Integration Guide Card -->
+      <div class="glass-panel doc-card">
+        <h3>🛠️ 工程師整合說明 (Stripe Checkout Backend Integration)</h3>
+        <p>
+          為了在生產環境中實現安全收款，您需要建立一個 API 來產生真實的 Stripe Checkout 階段 (Session)：
+        </p>
+        <ol class="doc-steps">
+          <li>申請一個 <a href="https://stripe.com" target="_blank" rel="noopener noreferrer">Stripe</a> 帳戶並設定為個人/獨資 (Individual) 類別。</li>
+          <li>在 Stripe 產品控制台建立您的產品與價格 (Price ID)，例如 `price_1Pxxxxxx`。</li>
+          <li>在前端點擊按鈕時，將 API 要求發送至後端，並由後端轉發至 Stripe API。以下為後端 Node.js / Serverless 整合範例：</li>
+        </ol>
+        <pre><code>import Stripe from 'stripe';
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+
+export async function post(&#123; request &#125;) &#123;
+  const &#123; priceId &#125; = await request.json();
+  const session = await stripe.checkout.sessions.create(&#123;
+    payment_method_types: ['card'],
+    line_items: [&#123;
+      price: priceId, // 👈 傳入 Stripe 的 Price ID
+      quantity: 1,
+    &#125;],
+    mode: 'payment', // 或 'subscription' 用於月顧問
+    success_url: 'https://yourdomain.com/booking?session_id=&#123;CHECKOUT_SESSION_ID&#125;',
+    cancel_url: 'https://yourdomain.com/pricing',
+  &#125;);
+
+  return new Response(JSON.stringify(&#123; url: session.url &#125;), &#123; status: 200 &#125;);
+&#125;</code></pre>
+      </div>
+    </main>
+    <Footer />
+
+    <script>
+      function setupPricing() {
+        const checkoutBtns = document.querySelectorAll('.checkout-btn');
+        const modal = document.getElementById('stripe-checkout-modal');
+        const successModal = document.getElementById('payment-success-screen');
+        const closeModalBtn = document.getElementById('close-modal-btn');
+        const closeSuccessBtn = document.getElementById('close-success-btn');
+        const modalPlanName = document.getElementById('modal-plan-name');
+        const modalPlanPrice = document.getElementById('modal-plan-price');
+        const successPlanName = document.getElementById('success-plan-name');
+        const successPlanPrice = document.getElementById('success-plan-price');
+        const paymentForm = document.getElementById('mock-payment-form') as HTMLFormElement;
+
+        let activePlanName = "";
+        let activePlanPrice = "";
+
+        // Open payment modal
+        checkoutBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const plan = btn.getAttribute('data-plan');
+            const price = btn.getAttribute('data-price');
+            if (plan && price && modal && modalPlanName && modalPlanPrice) {
+              activePlanName = plan;
+              activePlanPrice = `NT$ ${parseInt(price).toLocaleString()}`;
+              
+              modalPlanName.textContent = activePlanName;
+              modalPlanPrice.textContent = activePlanPrice;
+              
+              modal.classList.remove('hidden');
+            }
+          });
+        });
+
+        // Close payment modal
+        if (closeModalBtn && modal) {
+          closeModalBtn.addEventListener('click', () => {
+            modal.classList.add('hidden');
+          });
+        }
+
+        // Handle payment submit simulation
+        if (paymentForm && modal && successModal && successPlanName && successPlanPrice) {
+          paymentForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('pay-submit-btn') as HTMLButtonElement;
+            if (submitBtn) {
+              submitBtn.disabled = true;
+              submitBtn.textContent = "處理中...";
+            }
+
+            // Simulate processing latency
+            setTimeout(() => {
+              if (submitBtn) {
+                submitBtn.disabled = false;
+                submitBtn.textContent = "確認付款";
+              }
+              paymentForm.reset();
+              modal.classList.add('hidden');
+              
+              successPlanName.textContent = activePlanName;
+              successPlanPrice.textContent = activePlanPrice;
+              successModal.classList.remove('hidden');
+            }, 1500);
+          });
+        }
+
+        // Close success modal
+        if (closeSuccessBtn && successModal) {
+          closeSuccessBtn.addEventListener('click', () => {
+            successModal.classList.add('hidden');
+          });
+        }
+      }
+
+      setupPricing();
+      document.addEventListener('astro:page-load', setupPricing);
+    </script>
+  </body>
+</html>
+
+<style>
+  .pricing-main {
+    max-width: 1100px;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  .pricing-header {
+    text-align: center;
+  }
+
+  .pricing-header h1 {
+    font-size: 3rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .pricing-subtitle {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    max-width: 750px;
+    margin: 0 auto;
+  }
+
+  /* Plans Grid */
+  .plans-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    align-items: stretch;
+  }
+
+  .plan-card {
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+    position: relative;
+  }
+
+  .popular-plan {
+    border-color: var(--accent);
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px -5px rgba(99, 102, 241, 0.2);
+  }
+
+  .popular-plan:hover {
+    border-color: var(--accent-light);
+    box-shadow: var(--box-shadow-hover);
+  }
+
+  .popular-badge {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent-gradient);
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.3rem 1rem;
+    border-radius: 9999px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+  }
+
+  .plan-name {
+    font-size: 1.45rem;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .plan-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .plan-price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.25rem;
+    color: var(--text-primary);
+  }
+
+  .currency {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .amount {
+    font-size: 2.75rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .period {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+  }
+
+  .plan-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+    flex-grow: 1;
+  }
+
+  .plan-features li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+  }
+
+  .plan-features li:before {
+    content: "✓";
+    color: var(--accent);
+    font-weight: bold;
+  }
+
+  .checkout-btn {
+    padding: 0.9rem;
+    border-radius: var(--border-radius-sm);
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    text-align: center;
+  }
+
+  .checkout-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-1px);
+  }
+
+  .primary-btn {
+    background: var(--accent-gradient);
+    color: #fff;
+    border: none;
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.25);
+  }
+
+  .primary-btn:hover {
+    background: var(--accent-gradient-hover);
+    color: #fff;
+    box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+  }
+
+  /* Payment Modal */
+  .payment-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(8px);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+
+  .payment-modal-backdrop.hidden {
+    display: none;
+  }
+
+  .payment-modal {
+    max-width: 480px;
+    width: 100%;
+    padding: 2.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: relative;
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .text-center {
+    text-align: center;
+    align-items: center;
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.75rem;
+  }
+
+  .modal-header h4 {
+    margin: 0;
+    font-size: 1.15rem;
+  }
+
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 1.75rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: color var(--transition-fast);
+    line-height: 1;
+  }
+
+  .close-btn:hover {
+    color: var(--text-primary);
+  }
+
+  .modal-intro {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin: 0;
+  }
+
+  .payment-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 1.25rem;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    font-weight: 600;
+    font-size: 1.05rem;
+  }
+
+  .payment-summary strong {
+    color: var(--accent-light);
+    font-size: 1.15rem;
+  }
+
+  .card-demo-graphic {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .card-brands {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .brand-logo {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-muted);
+  }
+
+  .p-security {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  .mock-payment-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 1rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .form-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+
+  .form-group input {
+    padding: 0.75rem 0.9rem;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color var(--transition-fast);
+  }
+
+  .form-group input:focus {
+    border-color: var(--accent);
+  }
+
+  .pay-submit-btn {
+    padding: 0.9rem;
+    border-radius: var(--border-radius-sm);
+    background: #10b981;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.05rem;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+    transition: all var(--transition-fast);
+    margin-top: 0.5rem;
+  }
+
+  .pay-submit-btn:hover {
+    background: #059669;
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.35);
+  }
+
+  .success-icon {
+    font-size: 4rem;
+  }
+
+  .margin-y {
+    margin: 1rem 0;
+    width: 100%;
+  }
+
+  .success-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .success-actions .cta-button {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Doc Card */
+  .doc-card {
+    padding: 2.5rem;
+    border-color: rgba(99, 102, 241, 0.15);
+  }
+
+  .doc-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+  }
+
+  .doc-card p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin-bottom: 1.25rem;
+  }
+
+  .doc-steps {
+    padding-left: 1.25rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .doc-steps li {
+    margin-bottom: 0.5rem;
+  }
+
+  .doc-card pre {
+    margin: 0;
+    padding: 1rem 1.25rem;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+  }
+
+  .doc-card code {
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    border: none;
+    background: transparent;
+    padding: 0;
+  }
+
+  @media (max-width: 850px) {
+    .plans-grid {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+    .popular-plan {
+      transform: none;
+    }
+  }
+</style>
